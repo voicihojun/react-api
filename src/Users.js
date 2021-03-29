@@ -13,13 +13,13 @@ async function getUsers() {
 function Users() {
   const [userId, setUserId] = useState(null);
 
-  const { data: users, error, isLoading, reload } = useAsync({
-    promiseFn: getUsers,
+  const { data: users, error, isLoading, run } = useAsync({
+    deferFn: getUsers,
   });
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error!!!!</div>;
-  if (!users) return <button onClick={reload}>request</button>;
+  if (!users) return <button onClick={run}>request</button>;
 
   return (
     <>
@@ -34,7 +34,7 @@ function Users() {
           </li>
         ))}
       </ul>
-      <button onClick={reload}>Re request</button>
+      <button onClick={run}>Re request</button>
       {userId && <User id={userId} />}
     </>
   );
